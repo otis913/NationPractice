@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js"></script>
+  <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+  <title>Nation Practice</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+ 
+  <div id="app">
+
+    <div class="search_block">
+      <input 
+        type="text" 
+        v-model.lazy="search" 
+        :placeholder="searchPlaceholder" 
+      >
+      <button @click="searchBtn">搜尋</button>
+    </div>
+    <div class="sort_block">
+      <select 
+        id="nameSort" 
+        class="sort_select" 
+        v-model="selectVal" 
+        @change="chang_val(this.selectVal)">
+        <option v-for="item in selectList" :value="item.value" >{{item.item}}</option>
+      </select>
+    </div>
+    <div class="data_content">
+      <table>
+        <tr>
+          <th>國旗</th>
+          <th>國家名稱</th>
+          <th>國家代碼(二碼)</th>
+          <th>國家代碼(三碼)</th>
+          <th>母語名稱</th>
+          <th>替代國家名增</th>
+          <th>國際電話區號</th>
+        </tr>
+        <tr v-for="item in listData">
+          <td>
+            <img :src="item.flag" :alt="item.name">
+          </td>
+          <td>{{item.name}}</td>
+          <td>{{item.cca2}}</td>
+          <td>{{item.cca3}}</td>
+          <td>{{item.nativeName}}</td>
+          <td v-for="spe_item in item.altSpellings">
+            <span>{{spe_item}}</span>
+          </td>
+          <td v-for="idd_item in iddFilter(item.idd)">
+            <span>{{idd_item}}</span>
+          </td>
+        </tr>
+      </table>
+      <!-- <div class="pageinator">
+        <span class="pageinator_item" v-for="item in pageArr" >{{item}}</span>
+      </div> -->
+    </div>
+
+  </div>
+  <script>
+    new Vue({
+      el:'#app',
+      data(){
+        return {
+          data:[],
+          filterData:[],
+          listData:[],
+          search:'',
+          searchPlaceholder:"請輸入國家名稱",
+          selectList:[
+            { value: 'positive',
+              item: '正序'
+            }, 
+            { value: 'negative',
+              item: '倒序'
+            },
+          ],
+          selectVal : 'positive',
+          // pageData:[],
+          // pageArr:[],
+          // perPage: 25,
+          // paginatorLength : 5,
+          // currentPage: 1,
+        }
+      },
+      mounted () {
+        axios
+          .get('https://restcountries.com/v3.1/all')
+          .then(response => {
+            this.data.push(...response.data);
+            // this.filterData.push(...response.data);
+            // console.log(response.data);
+            this.filter_data;
+            // console.log('in');
+            // this.chang_val(this.selectVal);
+          }).catch(function (error) { 
+            console.log(error);
+          });
+      },
+      methods: {
+        iddFilter(idd){
+          let root = idd.root;
+          let newIdd = [];
+          //如果idd.suffixes為空值
+          if( idd.suffixes !== undefined && Object.keys(idd.suffixes)){
+            idd.suffixes.forEach(value => {
+              newIdd.push(root+value);
+              // console.log(value);
+            });
+          }
+          return newIdd;
+        },
+        searchBtn(){
+          // //原陣列filterData來做比對用,比對完資料放到listData
+          this.listData = this.filterData.filter(value => {
+            let name = value.name.toLowerCase();
+            return name.includes(this.search.toLowerCase());
+          })
+          // this.newData.filter(value => {
+          //   let name = value.name.toLowerCase();
+          //   return name.includes(this.search.toLowerCase());
+          // })
+        },
+        // pageRender(data, page){
+        //   this.currentPage = page;
+        //   // const minData = ((currentPage *  this.perPage) —  this.perPage) + 1;
+        //   const maxData = this.currentPage * this.perPage;
+        //   //資料進行分頁
+        //   this.newData.forEach((item, index) => {
+        //     const num = index + 1; 
+        //     if ( num <= maxData) {
+        //       this.pageData.push(item);
+        //     }
+        //   });
+        // },
+        positiveName( a, b ){
+          if ( a.name.toLowerCase() > b.name.toLowerCase())return 1;
+          if ( a.name.toLowerCase() < b.name.toLowerCase())return -1;
+          return 0;
+        },
+        negativeName( a, b ){
+          if ( a.name.toLowerCase() > b.name.toLowerCase())return -1;
+          if ( a.name.toLowerCase() < b.name.toLowerCase())return 1;
+          return 0;
+        },
+        chang_val(){
+          console.log('2');
+          if(this.selectVal == 'positive'){
+            this.filterData.sort(this.positiveName);
+            // this.listData = this.filterData.sort(this.positiveName);
+            // console.log('positive');
+          }else{
+            this.filterData.sort(this.negativeName);
+            // this.listData = this.filterData.sort(this.negativeName);
+            // console.log('negative');
+          }
+        },
+
+        // // renderPaginator(amount){
+        // //   let pageArr = [];
+        // //   // let total = Math.ceil(amount);
+        // // }
+ 
+      },
+      computed:{
+        filter_data(){
+          console.log('1');
+          this.data.map((value, index)=>{
+            this.filterData.push({
+              name: value.name.official,
+              flag: value.flags.png,
+              cca2: value.cca2,
+              cca3: value.cca3,
+              nativeName: value.name.nativeName ? Object.keys(value.name?.nativeName)[0]: value.name.official,
+              altSpellings: value.altSpellings,
+              idd: value.idd,
+            })
+            this.listData.push({
+              name: value.name.official,
+              flag: value.flags.png,
+              cca2: value.cca2,
+              cca3: value.cca3,
+              nativeName: value.name.nativeName ? Object.keys(value.name?.nativeName)[0]: value.name.official,
+              altSpellings: value.altSpellings,
+              idd: value.idd,
+            })
+          })
+        },
+        // renderPaginator(){
+        //   let total = Math.ceil(this.newData.length / this.perPage);
+        //   if(total <this.paginatorLength){
+        //     for(let i=0; i<total; i++ ){
+        //       pageArr.push(i+1);      
+        //     }
+        //   }else{
+        //     // 扣掉省略號佔的一格及前或後方固定顯示的兩個頁碼
+        //     const max = this.paginatorLength - 3; 
+        //     // 當前頁面偏向頁首時
+        //     if(this.currentPage <= max){
+        //       // 前段顯示的頁碼
+        //       for(let i=0; i<max; i++){
+        //         this.pageArr.push(i+1);
+        //       }
+        //       // 補齊後面的頁碼
+        //       this.pageArr.push(max+1, '...', total);
+        //       // 當前頁面偏向頁尾時
+        //     }else if(this.currentPage >total - max){
+        //       // 後段顯示的頁碼
+        //       for(let i=0; i<max; i++){
+        //         this.pageArr.unshift(total-i);
+        //       }
+        //       // 補齊前面的頁碼
+        //       this.pageArr.unshift(1, '...', total-max);
+        //       // 當前頁面在中間時
+        //     }else{
+        //       let around = (this.paginatorLength - 7) / 2; // 減去前後固定顯示的兩頁、省略號以及當前頁
+        //       let leftArr = []; // 當前頁左方的頁碼
+        //       let rightArr = []; // 當前頁右方的頁碼
+        //       // 湊足中間顯示的頁碼
+        //       for(let i=1; i<=around; i++){
+        //         leftArr.unshift(this.currentPage - i);
+        //         rightArr.push(this.currentPage + i);
+        //       }
+        //       // 組合中段並補齊前後段
+        //       this.pageArr = leftArr.concat(this.currentPage, rightArr);
+        //       this.pageArr.push('...',total-1, total);
+        //       this.pageArr.unshift(1, 2, '...');
+        //     }
+        //   }
+        // },
+        // toPage() {
+        //   this.pageRender(this.newData, 1);
+        // }
+      },
+    });
+  </script>
+</body>
+
+</html>

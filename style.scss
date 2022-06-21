@@ -1,0 +1,16 @@
+.pageinator{
+  &_item{
+    cursor: pointer;
+    border: 1px solid #666;
+    border-radius: 10px;
+    padding: 5px 8px;
+  }
+  &_item + &_item{
+    margin-left: 15px;
+  }
+  &_item:nth-child(4){
+    border-radius: unset;
+    border: unset;
+    cursor: default;
+  }
+}
