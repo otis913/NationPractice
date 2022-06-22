@@ -27,7 +27,7 @@
         id="nameSort" 
         class="sort_select" 
         v-model="selectVal" 
-        @change="chang_val(this.selectVal)">
+        @change="chang_val(listData)">
         <option v-for="item in selectList" :value="item.value" >{{item.item}}</option>
       </select>
     </div>
@@ -72,6 +72,7 @@
           data:[],
           filterData:[],
           listData:[],
+          // searchData:[],
           search:'',
           searchPlaceholder:"請輸入國家名稱",
           selectList:[
@@ -95,83 +96,15 @@
           .get('https://restcountries.com/v3.1/all')
           .then(response => {
             this.data.push(...response.data);
-            // this.filterData.push(...response.data);
             // console.log(response.data);
-            this.filter_data;
-            // console.log('in');
-            // this.chang_val(this.selectVal);
+            this.filter_data();
+            this.chang_val(this.listData);
           }).catch(function (error) { 
             console.log(error);
           });
       },
       methods: {
-        iddFilter(idd){
-          let root = idd.root;
-          let newIdd = [];
-          //如果idd.suffixes為空值
-          if( idd.suffixes !== undefined && Object.keys(idd.suffixes)){
-            idd.suffixes.forEach(value => {
-              newIdd.push(root+value);
-              // console.log(value);
-            });
-          }
-          return newIdd;
-        },
-        searchBtn(){
-          // //原陣列filterData來做比對用,比對完資料放到listData
-          this.listData = this.filterData.filter(value => {
-            let name = value.name.toLowerCase();
-            return name.includes(this.search.toLowerCase());
-          })
-          // this.newData.filter(value => {
-          //   let name = value.name.toLowerCase();
-          //   return name.includes(this.search.toLowerCase());
-          // })
-        },
-        // pageRender(data, page){
-        //   this.currentPage = page;
-        //   // const minData = ((currentPage *  this.perPage) —  this.perPage) + 1;
-        //   const maxData = this.currentPage * this.perPage;
-        //   //資料進行分頁
-        //   this.newData.forEach((item, index) => {
-        //     const num = index + 1; 
-        //     if ( num <= maxData) {
-        //       this.pageData.push(item);
-        //     }
-        //   });
-        // },
-        positiveName( a, b ){
-          if ( a.name.toLowerCase() > b.name.toLowerCase())return 1;
-          if ( a.name.toLowerCase() < b.name.toLowerCase())return -1;
-          return 0;
-        },
-        negativeName( a, b ){
-          if ( a.name.toLowerCase() > b.name.toLowerCase())return -1;
-          if ( a.name.toLowerCase() < b.name.toLowerCase())return 1;
-          return 0;
-        },
-        chang_val(){
-          console.log('2');
-          if(this.selectVal == 'positive'){
-            this.filterData.sort(this.positiveName);
-            // this.listData = this.filterData.sort(this.positiveName);
-            // console.log('positive');
-          }else{
-            this.filterData.sort(this.negativeName);
-            // this.listData = this.filterData.sort(this.negativeName);
-            // console.log('negative');
-          }
-        },
-
-        // // renderPaginator(amount){
-        // //   let pageArr = [];
-        // //   // let total = Math.ceil(amount);
-        // // }
- 
-      },
-      computed:{
         filter_data(){
-          console.log('1');
           this.data.map((value, index)=>{
             this.filterData.push({
               name: value.name.official,
@@ -193,6 +126,66 @@
             })
           })
         },
+        iddFilter(idd){
+          let root = idd.root;
+          let newIdd = [];
+          //如果idd.suffixes為空值
+          if( idd.suffixes !== undefined && Object.keys(idd.suffixes)){
+            idd.suffixes.forEach(value => {
+              newIdd.push(root+value);
+              // console.log(value);
+            });
+          }
+          return newIdd;
+        },
+        searchBtn(){
+          //原陣列filterData來做比對用,比對完資料放到listData
+          this.listData = this.filterData.filter(value => {
+            let name = value.name.toLowerCase();
+            return name.includes(this.search.toLowerCase());
+          }).chang_val(this.listData, this.selectVal);
+        },
+        // pageRender(data, page){
+        //   this.currentPage = page;
+        //   // const minData = ((currentPage *  this.perPage) —  this.perPage) + 1;
+        //   const maxData = this.currentPage * this.perPage;
+        //   //資料進行分頁
+        //   this.newData.forEach((item, index) => {
+        //     const num = index + 1; 
+        //     if ( num <= maxData) {
+        //       this.pageData.push(item);
+        //     }
+        //   });
+        // },
+        
+        sortName( a, b ){
+          let postiveSort = this.selectVal === "postive" ? 1 : -1;
+          let negativeSort = this.selectVal === "negative" ? 1 : -1;
+          if ( a.name.toLowerCase() > b.name.toLowerCase())return postiveSort;
+          if ( a.name.toLowerCase() < b.name.toLowerCase())return negativeSort;
+          return 0;
+        },
+        // positiveName( a, b ){
+        //   if ( a.name.toLowerCase() > b.name.toLowerCase())return 1;
+        //   if ( a.name.toLowerCase() < b.name.toLowerCase())return -1;
+        //   return 0;
+        // },
+        // negativeName( a, b ){
+        //   if ( a.name.toLowerCase() > b.name.toLowerCase())return -1;
+        //   if ( a.name.toLowerCase() < b.name.toLowerCase())return 1;
+        //   return 0;
+        // },
+        chang_val(array){
+          this.listData = array.sort(this.sortName);
+        },
+
+        // // renderPaginator(amount){
+        // //   let pageArr = [];
+        // //   // let total = Math.ceil(amount);
+        // // }
+ 
+      },
+      computed:{
         // renderPaginator(){
         //   let total = Math.ceil(this.newData.length / this.perPage);
         //   if(total <this.paginatorLength){
