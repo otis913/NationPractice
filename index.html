@@ -293,7 +293,6 @@
           if ( a.name.toLowerCase() < b.name.toLowerCase())return negativeSort;
           return 0;
         },
-
         //呼叫排序,傳入陣列
         sort_list(array){
           this.listData = array.sort(this.sort_name);
@@ -350,6 +349,7 @@
             pageTagHasPre: currentPageTag > 1,
             pageTagHasNext: currentPageTag < PageTagTotal,
           };
+          this.sort_list(this.listData);
         },
         toPage(page) {
           this.pagination(this.filterData, page);
