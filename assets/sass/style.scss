@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+// @import "boot/_functions";
+// @import "boot/_variables";
+// @import "boot/_mixins";
+// @import "boot/_reboot";
+// @import "boot/_spacing";
+// @import "boot/_text";
+
+// (node_modules)
+@import "bootstrap/scss/functions";
+// (node_modules)
+@import "bootstrap/scss/variables";
+// (node_modules)
+@import "bootstrap/scss/mixins";
+// custom grid-breakpoints --------------------------
+$grid-breakpoints: (
+  xxs: 0,
+  xs: 375px,
+  xss: 428px,
+  sm: 576px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  xxl: 1366px,
+);
+$container-max-widths: (
+  xs: 91.4%,
+  md: 89.5%,
+  xl: 1200px,
+);
+// $grid-columns: 12;
+// $grid-gutter-width: 24px;
+
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/grid";
+// (node_modules)
+@import "bootstrap/scss/utilities/spacing";
+// (node_modules)
+@import "bootstrap/scss/utilities/text";
+// (node_modules)
+
+// custom variables
+@import "core/_custom_variable";
+@import "_mixin";
+@import "_base";
+@import "_mixin";
+@import "_components";
+@import "_custom";
+
+/*    > animate keyframes  */
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes enlarge {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.05, 1.05);
+  }
+}
+
+/* =================================== */
+
+body {
+  margin: auto;
+}
+
+

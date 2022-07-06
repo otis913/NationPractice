@@ -1,0 +1,137 @@
+
+@each $i, $size in $txt-size {
+  .txt-#{$i} {
+    // @extend %txt-common-style;
+    @include remCalc(font-size, $size);
+  }
+}
+@each $name, $color in $colors {
+  .txt-#{$name} {
+    color: $color;
+  }
+}
+.txt {
+  // @extend .txt-grey1;
+  margin-bottom: 0;
+  font-weight: 400;
+  color: color("grey3");
+  @include media-down(md) {
+    @include remCalc(font-size, 14);
+    line-height: 20px;
+  }
+  &-head1 {
+    @extend .txt-h1;
+    letter-spacing: 2px;
+    font-family: $NotoSerifTC;
+    line-height: 54px;
+
+    color: color("primary");
+    @include media-down(md) {
+      @include remCalc(font-size, 28);
+      text-align: center;
+    }
+  }
+  &-head2 {
+    @extend .txt-h2;
+    letter-spacing: 2px;
+    font-family: $NotoSerifTC;
+    line-height: 45px;
+
+    @include media-down(md) {
+      @include remCalc(font-size, 18);
+      line-height: 22px;
+      letter-spacing: 1px;
+    }
+    @include media-down(sm) {
+      @include remCalc(font-size, 14);
+      line-height: 22px;
+      letter-spacing: 1px;
+    }
+  }
+  &-head3 {
+    @extend .txt-h3;
+    letter-spacing: 1px;
+    font-family: $NotoSerifTC;
+    line-height: 36px;
+
+    @include media-down(md) {
+      @include remCalc(font-size, 20);
+    }
+  }
+  &-head4 {
+    @extend .txt-h4;
+    letter-spacing: 1px;
+    font-family: $NotoSansTC;
+    line-height: 27px;
+
+    @include media-down(md) {
+      @include remCalc(font-size, 20);
+    }
+  }
+  &-head5 {
+    @extend .txt-h5;
+    letter-spacing: 1px;
+    font-family: $NotoSansTC;
+    line-height: 27px;
+    @include media-down(md) {
+      @include remCalc(font-size, 14);
+      line-height: 22px;
+    }
+  }
+  &-head6 {
+    @extend .txt-h6;
+    letter-spacing: 1px;
+    font-family: $NotoSansTC;
+    line-height: 27px;
+  }
+  &-s {
+    @extend .txt-s;
+    font-family: $NotoSansTC;
+    line-height: 20px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+
+    color: color("grey2");
+    // @include media-down(md) {
+    //   @include remCalc(font-size, 16);
+    // }
+  }
+}
+
+.hide_txt {
+  @include hide_txt;
+}
+
+%txt-common-style {
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+p {
+  @extend .txt-p1;
+  font-family: $NotoSerifTC;
+  line-height: 22px;
+  margin-bottom: 0;
+  letter-spacing: 1px;
+
+  @include media-down(md) {
+    @include remCalc(font-size, 14);
+  }
+}
+a {
+  @extend .txt-h5;
+  font-family: $NotoSerifTC;
+  font-weight: 500;
+  line-height: 24px;
+  margin-bottom: 0;
+  letter-spacing: 1px;
+}
+.web_footer-heading {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 1px;
+  color: color("grey1");
+  padding-bottom: 24px;
+}
+
