@@ -289,6 +289,7 @@
           //如果為倒序,a<b為1,所以negativeSort為1反之為-1
           let negativeSort = this.selectVal === "negative" ? 1 : -1;
           // console.log(a);
+          // console.log('in sort_name');
           if ( a.name.toLowerCase() > b.name.toLowerCase())return postiveSort;
           if ( a.name.toLowerCase() < b.name.toLowerCase())return negativeSort;
           return 0;
@@ -349,7 +350,7 @@
             pageTagHasPre: currentPageTag > 1,
             pageTagHasNext: currentPageTag < PageTagTotal,
           };
-          this.sort_list(this.listData);
+          // this.sort_list(this.listData);
         },
         toPage(page) {
           this.pagination(this.filterData, page);
