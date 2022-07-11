@@ -5,6 +5,10 @@
     flex-wrap: wrap;
   }
   &_item{
+    &.active .pagination_link{
+      color: color('white');
+      background-color: color('primary');
+    }
   }
   &_link{
     display: block;
