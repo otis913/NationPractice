@@ -38,6 +38,8 @@
           }
         }
         .content{
+          display: flex;
+          flex-wrap: wrap;
           h3.txt{
             padding-left: 12px;
           }

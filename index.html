@@ -53,132 +53,100 @@
       <div class="container">
         <div class="section_content-card">
           <ul class="section_content-list lis-n" >
-            <!-- <div class="item_col col-12 col-lg-4" v-for="item in listData"> -->
-              <li class="section_content-item" v-for="item in listData">
-                <div class="img_div img_flag">
-                  <img :src="item.flag" :alt="item.name">
-                </div>
-                <div class="info">
-                  <div class="info-block info-name ">
-                    <div class="title ">
-                      <h2 class="txt txt-head4">名稱</h2>
-                    </div>
-                    <div class="content ">
-                      <h3 class="txt txt-head4">{{item.name}}</h3>
-                    </div>
+            <li class="section_content-item" v-for="item in listData">
+              <div class="img_div img_flag">
+                <img :src="item.flag" :alt="item.name">
+              </div>
+              <div class="info">
+                <div class="info-block info-name ">
+                  <div class="title ">
+                    <h2 class="txt txt-head4">名稱</h2>
                   </div>
-                  <div class="info-block info-cca2 ">
-                    <div class="title ">
-                      <h2 class="txt txt-head4">代碼(二碼)</h2>
-                    </div>
-                    <div class="content col-8">
-                      <h3 class="txt txt-head4">{{item.cca2}}</h3>
-                    </div>
-                  </div>
-                  <div class="info-block info-cca3 ">
-                    <div class="title ">
-                      <h2 class="txt txt-head4">國家代碼(三碼)</h2>
-                    </div>
-                    <div class="content ">
-                      <h3 class="txt txt-head4">{{item.cca3}}</h3>
-                    </div>
-                  </div>
-                  <div class="info-block info-nativeName ">
-                    <div class="title ">
-                      <h2 class="txt txt-head4">母語名稱</h2>
-                    </div>
-                    <div class="content ">
-                      <h3 class="txt txt-head4">{{item.nativeName}}</h3>
-                    </div>
-                  </div>
-                  <div class="info-block info-altSpellings ">
-                    <div class="title">
-                      <h2 class="txt txt-head4">替代國家名稱</h2>
-                    </div>
-                    <div class="content ">
-                      <h3 class="txt txt-head4" v-for="spe_item in item.altSpellings">{{spe_item}}</h3>
-                    </div>
-                  </div>
-                  <div class="info-block info-idd ">
-                    <div class="title ">
-                      <h2 class="txt txt-head4">國際電話區號</h2>
-                    </div>
-                    <div class="content ">
-                      <h3 class="txt txt-head" v-for="idd_item in idd_filter(item.idd)">{{idd_item}}</h3>
-                    </div>
+                  <div class="content ">
+                    <h3 class="txt txt-head4">{{item.name}}</h3>
                   </div>
                 </div>
-              </li>
-            <!-- </div> -->
+                <div class="info-block info-cca2 ">
+                  <div class="title ">
+                    <h2 class="txt txt-head4">代碼(二碼)</h2>
+                  </div>
+                  <div class="content col-8">
+                    <h3 class="txt txt-head4">{{item.cca2}}</h3>
+                  </div>
+                </div>
+                <div class="info-block info-cca3 ">
+                  <div class="title ">
+                    <h2 class="txt txt-head4">國家代碼(三碼)</h2>
+                  </div>
+                  <div class="content ">
+                    <h3 class="txt txt-head4">{{item.cca3}}</h3>
+                  </div>
+                </div>
+                <div class="info-block info-nativeName ">
+                  <div class="title ">
+                    <h2 class="txt txt-head4">母語名稱</h2>
+                  </div>
+                  <div class="content ">
+                    <h3 class="txt txt-head4">{{item.nativeName}}</h3>
+                  </div>
+                </div>
+                <div class="info-block info-altSpellings ">
+                  <div class="title">
+                    <h2 class="txt txt-head4">替代國家名稱</h2>
+                  </div>
+                  <div class="content ">
+                    <h3 class="txt txt-head4" v-for="spe_item in item.altSpellings">{{spe_item}}</h3>
+                  </div>
+                </div>
+                <div class="info-block info-idd ">
+                  <div class="title ">
+                    <h2 class="txt txt-head4">國際電話區號</h2>
+                  </div>
+                  <div class="content ">
+                    <h3 class="txt txt-head" v-for="idd_item in idd_filter(item.idd)">{{idd_item}}</h3>
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
     </section>
-    <div class="">
-      <!-- <table>
-        <tr>
-          <th>國旗</th>
-          <th>國家名稱</th>
-          <th>國家代碼(二碼)</th>
-          <th>國家代碼(三碼)</th>
-          <th>母語名稱</th>
-          <th>替代國家名增</th>
-          <th>國際電話區號</th>
-        </tr>
-        <tr v-for="item in listData">
-          <td>
-            <img :src="item.flag" :alt="item.name">
-          </td>
-          <td>{{item.name}}</td>
-          <td>{{item.cca2}}</td>
-          <td>{{item.cca3}}</td>
-          <td>{{item.nativeName}}</td>
-          <td v-for="spe_item in item.altSpellings">
-            <span>{{spe_item}}</span>
-          </td>
-          <td v-for="idd_item in idd_filter(item.idd)">
-            <span>{{idd_item}}</span>
-          </td>
-        </tr>
-      </table> -->
-      <!-- <div class="pageinator">
-        <span class="pageinator_item" v-for="item in pageArr" >{{item}}</span>
-      </div> -->
-     
-    </div>
-    <nav aria-label="Page navigation" v-if="pageItem.currentPage!=0">
-      <ul class="pagination justify-content-center">
-        <!-- 前一頁 -->
-        <li class="page-item" :class="{'disabled':!pageItem.hasPage}">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Previous"
-            @click.prevent="toPage(Number(pageItem.currentPage)-1)"
-          >
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item" v-for="i in pageItem.pageCurrent" 
-            :key="i">
-          <a class="page-link" href="#" @click.prevent="toPage(i)">{{i}}</a>
-        </li>
-        <li class="page-item" v-if="pageItem.pageTagHasNext">
-          <a href="#" 
-          class="page-link" 
-          @click.prevent="toPage((pageItem.currentPageTag+1)*pageItem.showPage)">...</a>
-        </li>
-        <li class="page-item" :class="{'disabled':!pageItem.hasNext}">
-          <a
-            class="page-link"
-            href="#"
-            aria-label="Next"
-            @click.prevent="toPage(Number(pageItem.currentPage)+1)"
-          >
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
+    <nav aria-label="pagination" v-if="pageItem.currentPage!=0">
+      <div class="container">
+        <ul class="pagination_list lis-n">
+          <!-- 前一頁 -->
+          <li class="pagination_item" :class="{'disabled':!pageItem.hasPage}">
+            <a
+              class="pagination_link"
+              href="#"
+              aria-label="Previous"
+              @click.prevent="toPage(Number(pageItem.currentPage)-1)"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="pagination_item" v-for="i in pageItem.pageCurrent" 
+              :key="i">
+            <a class="pagination_link" href="#" @click.prevent="toPage(i)">{{i}}</a>
+          </li>
+          <li class="pagination_item" v-if="pageItem.pageTagHasNext">
+            <a href="#" 
+            class="pagination_link" 
+            @click.prevent="toPage((pageItem.currentPageTag+1)*pageItem.showPage)">...</a>
+          </li>
+          <li class="pagination_item" :class="{'disabled':!pageItem.hasNext}">
+            <a
+              class="pagination_link"
+              href="#"
+              aria-label="Next"
+              @click.prevent="toPage(Number(pageItem.currentPage)+1)"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
   </div>
   <script>
@@ -288,7 +256,8 @@
           let postiveSort = this.selectVal === "postive" ? -1 : 1;
           //如果為倒序,a<b為1,所以negativeSort為1反之為-1
           let negativeSort = this.selectVal === "negative" ? 1 : -1;
-          // console.log(a);
+          console.log('in');
+          // console.log('in sort_name');
           if ( a.name.toLowerCase() > b.name.toLowerCase())return postiveSort;
           if ( a.name.toLowerCase() < b.name.toLowerCase())return negativeSort;
           return 0;
@@ -321,7 +290,6 @@
               this.listData.push(item);
             }
           });
-
           //分頁一頁顯示十筆頁碼
           this.pageItem.pageCurrent = [];
           const PageTagTotal = Math.ceil(pageTotal / showPage);
@@ -336,7 +304,6 @@
               pageCurrentItem.push(i);
             }
           }
-
           this.pageItem = {
             pageTotal,
             currentPage,
@@ -349,7 +316,7 @@
             pageTagHasPre: currentPageTag > 1,
             pageTagHasNext: currentPageTag < PageTagTotal,
           };
-          this.sort_list(this.listData);
+          // this.sort_list(this.listData);
         },
         toPage(page) {
           this.pagination(this.filterData, page);
